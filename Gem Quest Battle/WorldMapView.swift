@@ -76,7 +76,7 @@ private struct RegionSection: View {
                 if unlocked {
                     nodeGrid
                 } else {
-                    Text("Defeat \(Region.all[region.id - 1].bossName) to unlock this region.")
+                    Text("Defeat \(region.id > 0 ? Region.all[region.id - 1].bossName : "") to unlock this region.")
                         .font(.system(size: 13, weight: .medium, design: .rounded))
                         .foregroundColor(GQBTheme.textDim)
                         .padding(.vertical, 6)

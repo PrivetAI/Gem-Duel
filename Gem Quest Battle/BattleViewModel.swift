@@ -234,6 +234,11 @@ final class BattleViewModel: ObservableObject {
         if enemyHP <= 0 {
             phase = .resolving
             finishVictory()
+        } else {
+            phase = .resolving
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.35) { [weak self] in
+                self?.runEnemyTurn()
+            }
         }
     }
 
@@ -248,6 +253,11 @@ final class BattleViewModel: ObservableObject {
         if enemyHP <= 0 {
             phase = .resolving
             finishVictory()
+        } else {
+            phase = .resolving
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.35) { [weak self] in
+                self?.runEnemyTurn()
+            }
         }
     }
 
