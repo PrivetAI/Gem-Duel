@@ -1,9 +1,20 @@
 import Foundation
 
 // A single board cell. Empty == nil kind during resolution.
+// `id` is a stable identity that travels with a gem as it falls, so the UI can
+// slide a gem (rather than crossfade it) when it moves to a new row.
 struct Cell: Equatable {
     var kind: GemKind?
     var special: GemSpecial = .none
+    var id = UUID()
+}
+
+// One animation step captured during turn resolution so the UI can replay
+// swap → clear → fall as separate, animated beats.
+struct BoardFrame {
+    enum Step { case swap, clear, fall }
+    let step: Step
+    let grid: [[Cell]]
 }
 
 // Aggregated effect totals produced by clearing gems in a turn.
@@ -204,9 +215,15 @@ final class BoardEngine {
     // MARK: - Turn resolution
 
     // Result of resolving one swap: aggregated effects + whether anything happened.
-    func performSwap(_ a: (Int, Int), _ b: (Int, Int)) -> EffectTally? {
+    // Also returns the ordered animation frames (swap → clear → fall per cascade)
+    // so the UI can replay the resolution as discrete animated beats. The board
+    // computation and seeded-RNG consumption are identical to a non-animated
+    // resolution, so the final grid and tally are deterministic and unchanged.
+    func performSwap(_ a: (Int, Int), _ b: (Int, Int)) -> (frames: [BoardFrame], tally: EffectTally)? {
         guard swapWouldMatch(a, b) else { return nil }
+        var frames: [BoardFrame] = []
         swapCells(a, b)
+        frames.append(BoardFrame(step: .swap, grid: grid))
 
         var tally = EffectTally()
 
@@ -220,7 +237,9 @@ final class BoardEngine {
         }
         if !forcedClears.isEmpty {
             applyClears(forcedClears, into: &tally, allowSpecialCreation: false)
+            frames.append(BoardFrame(step: .clear, grid: grid))
             collapseAndRefill()
+            frames.append(BoardFrame(step: .fall, grid: grid))
         }
 
         // Resolve cascades from matches.
@@ -265,6 +284,8 @@ final class BoardEngine {
 
             // Cascade bonus: deeper cascades grant a bonus sword/star scaling handled in tally via cascadeIndex.
             applyClears(clears, into: &tally, allowSpecialCreation: false)
+            // Capture the "clear" beat: matched cells are now empty holes (gems fade out).
+            frames.append(BoardFrame(step: .clear, grid: grid))
 
             // Place new specials (do not place where a clear already removed and refilled — place at pivot before collapse).
             for s in specialsToCreate {
@@ -273,9 +294,11 @@ final class BoardEngine {
             }
 
             collapseAndRefill()
+            // Capture the "fall" beat: survivors slide down, new gems drop from above.
+            frames.append(BoardFrame(step: .fall, grid: grid))
         }
 
-        return tally
+        return (frames, tally)
     }
 
     private func isHorizontalDominant(_ g: MatchGroup) -> Bool {

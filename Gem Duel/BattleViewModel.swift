@@ -133,7 +133,7 @@ final class BattleViewModel: ObservableObject {
     func attemptSwap(from: (Int, Int), to: (Int, Int)) -> Bool {
         guard phase == .playerTurn || phase == .onboardingHint else { return false }
         guard engine.areAdjacent(from, to) else { return false }
-        guard let tally = engine.performSwap(from, to) else {
+        guard let result = engine.performSwap(from, to) else {
             return false  // illegal swap — caller reverts visual
         }
         if phase == .onboardingHint {
@@ -141,21 +141,44 @@ final class BattleViewModel: ObservableObject {
         }
         phase = .resolving
         turnsTaken += 1
-        applyTally(tally)
+        applyTally(result.tally)
         engine.ensurePlayable()
-        withAnimation(.easeInOut(duration: 0.18)) {
-            grid = engine.grid
-        }
-        // Check victory before enemy acts.
-        if enemyHP <= 0 {
-            finishVictory()
-            return true
-        }
-        // Enemy turn after a brief beat.
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.55) { [weak self] in
-            self?.runEnemyTurn()
+        // Replay the resolution as animated beats; advance the turn once it settles.
+        playBoardFrames(result.frames) { [weak self] in
+            guard let self = self else { return }
+            // Sync to the engine's final state (covers a rare lock-reshuffle).
+            withAnimation(.easeInOut(duration: 0.2)) { self.grid = self.engine.grid }
+            if self.enemyHP <= 0 {
+                self.finishVictory()
+            } else {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) { [weak self] in
+                    self?.runEnemyTurn()
+                }
+            }
         }
         return true
+    }
+
+    // Steps through resolution frames, animating each beat with a fitting curve:
+    // swap eases, gems pop out on clear, and survivors/new gems spring down on fall.
+    private func playBoardFrames(_ frames: [BoardFrame], completion: @escaping () -> Void) {
+        guard !frames.isEmpty else { completion(); return }
+        func play(_ i: Int) {
+            let f = frames[i]
+            let anim: Animation
+            let hold: Double
+            switch f.step {
+            case .swap:  anim = .easeInOut(duration: 0.16);                       hold = 0.17
+            case .clear: anim = .easeOut(duration: 0.18);                         hold = 0.19
+            case .fall:  anim = .spring(response: 0.34, dampingFraction: 0.74);   hold = 0.30
+            }
+            withAnimation(anim) { self.grid = f.grid }
+            let next = i + 1
+            DispatchQueue.main.asyncAfter(deadline: .now() + hold) {
+                if next < frames.count { play(next) } else { completion() }
+            }
+        }
+        play(0)
     }
 
     private func applyTally(_ tally: EffectTally) {

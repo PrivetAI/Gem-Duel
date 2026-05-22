@@ -10,6 +10,30 @@ struct BoardView: View {
 
     private let n = BoardEngine.size
 
+    // Flattened, identity-keyed view of the grid. Keying each gem by its stable
+    // `id` lets SwiftUI slide a gem to its new row (a fall) instead of crossfading.
+    private struct GemSprite: Identifiable {
+        let id: UUID
+        let kind: GemKind
+        let special: GemSpecial
+        let row: Int
+        let col: Int
+    }
+    private var sprites: [GemSprite] {
+        var out: [GemSprite] = []
+        for r in 0..<n {
+            guard r < vm.grid.count else { continue }
+            for c in 0..<n {
+                guard c < vm.grid[r].count else { continue }
+                let cell = vm.grid[r][c]
+                if let kind = cell.kind {
+                    out.append(GemSprite(id: cell.id, kind: kind, special: cell.special, row: r, col: c))
+                }
+            }
+        }
+        return out
+    }
+
     var body: some View {
         let cell = boardSize / CGFloat(n)
         let pad: CGFloat = cell * 0.06
@@ -19,22 +43,23 @@ struct BoardView: View {
                 .overlay(RoundedRectangle(cornerRadius: 18).stroke(GQBTheme.cardStroke.opacity(0.6), lineWidth: 1.5))
 
             // Grid of gems anchored to the parent-passed boardSize (avoids Canvas size pitfall).
-            ForEach(0..<n, id: \.self) { r in
-                ForEach(0..<n, id: \.self) { c in
-                    if r < vm.grid.count, c < vm.grid[r].count, let kind = vm.grid[r][c].kind {
-                        let isDragging = dragStart?.row == r && dragStart?.col == c
-                        GemView(kind: kind,
-                                special: vm.grid[r][c].special,
-                                selected: isDragging)
-                            .frame(width: cell - pad * 2, height: cell - pad * 2)
-                            .position(x: cell * (CGFloat(c) + 0.5),
-                                      y: cell * (CGFloat(r) + 0.5))
-                            .offset(isDragging ? clampedOffset(cell: cell) : .zero)
-                            .modifier(ShakeEffect(animatableData: (invalidShake?.row == r && invalidShake?.col == c) ? 1 : 0))
-                            .zIndex(isDragging ? 10 : 0)
-                            .allowsHitTesting(false)
-                    }
-                }
+            // Keyed by gem id: cleared gems scale + fade out, survivors slide down to
+            // their new row, and refilled gems drop in from above the board.
+            ForEach(sprites) { sprite in
+                let isDragging = dragStart?.row == sprite.row && dragStart?.col == sprite.col
+                GemView(kind: sprite.kind,
+                        special: sprite.special,
+                        selected: isDragging)
+                    .frame(width: cell - pad * 2, height: cell - pad * 2)
+                    .position(x: cell * (CGFloat(sprite.col) + 0.5),
+                              y: cell * (CGFloat(sprite.row) + 0.5))
+                    .offset(isDragging ? clampedOffset(cell: cell) : .zero)
+                    .modifier(ShakeEffect(animatableData: (invalidShake?.row == sprite.row && invalidShake?.col == sprite.col) ? 1 : 0))
+                    .zIndex(isDragging ? 10 : 0)
+                    .allowsHitTesting(false)
+                    .transition(.asymmetric(
+                        insertion: .offset(y: -boardSize * 0.5).combined(with: .opacity),
+                        removal: .scale(scale: 0.2).combined(with: .opacity)))
             }
         }
         .frame(width: boardSize, height: boardSize)
