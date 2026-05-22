@@ -36,10 +36,10 @@ final class BoardEngine {
     let typeCount = 6
 
     private(set) var grid: [[Cell]]   // grid[row][col]; row 0 = top
-    private var rng: GemQuestSeededRNG
+    private var rng: GemDuelSeededRNG
 
     init(seed: UInt64) {
-        rng = GemQuestSeededRNG(seed: seed)
+        rng = GemDuelSeededRNG(seed: seed)
         grid = Array(repeating: Array(repeating: Cell(kind: .sword), count: BoardEngine.size),
                      count: BoardEngine.size)
         generateNoMatchBoard()

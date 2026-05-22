@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct GemQuestBattleLoadingScreen: View {
+struct GemDuelLoadingScreen: View {
     @State private var spin = false
     @State private var pulse = false
 
@@ -29,7 +29,7 @@ struct GemQuestBattleLoadingScreen: View {
                 }
                 .frame(width: 150, height: 150)
 
-                Text("Gem Quest Battle")
+                Text("Gem Duel")
                     .font(.system(size: 24, weight: .heavy, design: .rounded))
                     .foregroundColor(GQBTheme.text)
                 Text("Preparing the duel...")

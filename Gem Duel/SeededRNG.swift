@@ -2,7 +2,7 @@ import Foundation
 
 // Deterministic seeded random number generator using SplitMix64 integer mixing.
 // NEVER uses String.hashValue or Hasher() — pure integer math for reproducibility.
-struct GemQuestSeededRNG {
+struct GemDuelSeededRNG {
     private var state: UInt64
 
     init(seed: UInt64) {
@@ -46,7 +46,7 @@ struct GemQuestSeededRNG {
 }
 
 // Helper to build a stable seed from integer inputs without Hasher.
-func gemQuestMixSeed(_ a: Int, _ b: Int, _ c: Int = 0) -> UInt64 {
+func gemDuelMixSeed(_ a: Int, _ b: Int, _ c: Int = 0) -> UInt64 {
     var s: UInt64 = 0xD1B54A32D192ED03
     s = (s ^ UInt64(bitPattern: Int64(a))) &* 0x9E3779B97F4A7C15
     s = (s ^ UInt64(bitPattern: Int64(b))) &* 0xC2B2AE3D27D4EB4F

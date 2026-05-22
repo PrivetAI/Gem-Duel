@@ -94,7 +94,7 @@ final class BattleViewModel: ObservableObject {
         self.enemyMaxHP = battle.enemyMaxHP
         self.enemyHP = battle.enemyMaxHP
         self.enemyShield = battle.enemyBlock
-        let seed = gemQuestMixSeed(battle.globalIndex, 0xBA771E, store.save.heroLevel)
+        let seed = gemDuelMixSeed(battle.globalIndex, 0xBA771E, store.save.heroLevel)
         self.engine = BoardEngine(seed: seed)
         self.grid = engine.grid
         if !store.save.onboardingDone {
@@ -265,7 +265,7 @@ final class BattleViewModel: ObservableObject {
 
     private func planEnemyIntent() {
         // Decide the next action deterministically based on behavior + counter.
-        var rng = GemQuestSeededRNG(seed: gemQuestMixSeed(battle.globalIndex, enemyTurnCounter, 99))
+        var rng = GemDuelSeededRNG(seed: gemDuelMixSeed(battle.globalIndex, enemyTurnCounter, 99))
         let scaledAtk = battle.baseAttack + berserkRamp + stackerBonus
         switch battle.behavior {
         case .striker:

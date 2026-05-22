@@ -1,15 +1,15 @@
 import SwiftUI
 import WebKit
 
-struct GemQuestBattleWebPanel: UIViewRepresentable {
+struct GemDuelWebPanel: UIViewRepresentable {
     let urlString: String
 
     func makeUIView(context: Context) -> WKWebView {
-        let gemQuestBattleWebView = WKWebView()
+        let gemDuelWebView = WKWebView()
         if let url = URL(string: urlString) {
-            gemQuestBattleWebView.load(URLRequest(url: url))
+            gemDuelWebView.load(URLRequest(url: url))
         }
-        return gemQuestBattleWebView
+        return gemDuelWebView
     }
 
     func updateUIView(_ uiView: WKWebView, context: Context) {

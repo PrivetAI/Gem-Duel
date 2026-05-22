@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		A001 /* GemQuestBattleApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B001 /* GemQuestBattleApp.swift */; };
+		A001 /* GemDuelApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B001 /* GemDuelApp.swift */; };
 		A002 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B002 /* RootView.swift */; };
 		A003 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B003 /* Assets.xcassets */; };
 		A004 /* SeededRNG.swift in Sources */ = {isa = PBXBuildFile; fileRef = B004 /* SeededRNG.swift */; };
@@ -28,12 +28,12 @@
 		A019 /* BestiaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B019 /* BestiaryView.swift */; };
 		A020 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B020 /* SettingsView.swift */; };
 		A021 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B021 /* OnboardingView.swift */; };
-		A022 /* GemQuestBattleWebPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B022 /* GemQuestBattleWebPanel.swift */; };
-		A023 /* GemQuestBattleLoadingScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = B023 /* GemQuestBattleLoadingScreen.swift */; };
+		A022 /* GemDuelWebPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B022 /* GemDuelWebPanel.swift */; };
+		A023 /* GemDuelLoadingScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = B023 /* GemDuelLoadingScreen.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		B001 /* GemQuestBattleApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GemQuestBattleApp.swift; sourceTree = "<group>"; };
+		B001 /* GemDuelApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GemDuelApp.swift; sourceTree = "<group>"; };
 		B002 /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
 		B003 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B004 /* SeededRNG.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeededRNG.swift; sourceTree = "<group>"; };
@@ -54,9 +54,9 @@
 		B019 /* BestiaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BestiaryView.swift; sourceTree = "<group>"; };
 		B020 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		B021 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
-		B022 /* GemQuestBattleWebPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GemQuestBattleWebPanel.swift; sourceTree = "<group>"; };
-		B023 /* GemQuestBattleLoadingScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GemQuestBattleLoadingScreen.swift; sourceTree = "<group>"; };
-		C001 /* Gem Quest Battle.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Gem Quest Battle.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		B022 /* GemDuelWebPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GemDuelWebPanel.swift; sourceTree = "<group>"; };
+		B023 /* GemDuelLoadingScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GemDuelLoadingScreen.swift; sourceTree = "<group>"; };
+		C001 /* Gem Duel.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Gem Duel.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C002 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -74,7 +74,7 @@
 		E001 = {
 			isa = PBXGroup;
 			children = (
-				E003 /* Gem Quest Battle */,
+				E003 /* Gem Duel */,
 				E002 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -82,15 +82,15 @@
 		E002 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				C001 /* Gem Quest Battle.app */,
+				C001 /* Gem Duel.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		E003 /* Gem Quest Battle */ = {
+		E003 /* Gem Duel */ = {
 			isa = PBXGroup;
 			children = (
-				B001 /* GemQuestBattleApp.swift */,
+				B001 /* GemDuelApp.swift */,
 				B002 /* RootView.swift */,
 				B004 /* SeededRNG.swift */,
 				B005 /* BrandColors.swift */,
@@ -110,20 +110,20 @@
 				B019 /* BestiaryView.swift */,
 				B020 /* SettingsView.swift */,
 				B021 /* OnboardingView.swift */,
-				B022 /* GemQuestBattleWebPanel.swift */,
-				B023 /* GemQuestBattleLoadingScreen.swift */,
+				B022 /* GemDuelWebPanel.swift */,
+				B023 /* GemDuelLoadingScreen.swift */,
 				B003 /* Assets.xcassets */,
 				C002 /* Info.plist */,
 			);
-			path = "Gem Quest Battle";
+			path = "Gem Duel";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		F001 /* Gem Quest Battle */ = {
+		F001 /* Gem Duel */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = G001 /* Build configuration list for PBXNativeTarget "Gem Quest Battle" */;
+			buildConfigurationList = G001 /* Build configuration list for PBXNativeTarget "Gem Duel" */;
 			buildPhases = (
 				F002 /* Sources */,
 				D001 /* Frameworks */,
@@ -133,9 +133,9 @@
 			);
 			dependencies = (
 			);
-			name = "Gem Quest Battle";
-			productName = "Gem Quest Battle";
-			productReference = C001 /* Gem Quest Battle.app */;
+			name = "Gem Duel";
+			productName = "Gem Duel";
+			productReference = C001 /* Gem Duel.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -154,7 +154,7 @@
 					};
 				};
 			};
-			buildConfigurationList = G002 /* Build configuration list for PBXProject "Gem Quest Battle" */;
+			buildConfigurationList = G002 /* Build configuration list for PBXProject "Gem Duel" */;
 			compatibilityVersion = "Xcode 12.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -167,7 +167,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				F001 /* Gem Quest Battle */,
+				F001 /* Gem Duel */,
 			);
 		};
 /* End PBXProject section */
@@ -188,7 +188,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A001 /* GemQuestBattleApp.swift in Sources */,
+				A001 /* GemDuelApp.swift in Sources */,
 				A002 /* RootView.swift in Sources */,
 				A004 /* SeededRNG.swift in Sources */,
 				A005 /* BrandColors.swift in Sources */,
@@ -208,8 +208,8 @@
 				A019 /* BestiaryView.swift in Sources */,
 				A020 /* SettingsView.swift in Sources */,
 				A021 /* OnboardingView.swift in Sources */,
-				A022 /* GemQuestBattleWebPanel.swift in Sources */,
-				A023 /* GemQuestBattleLoadingScreen.swift in Sources */,
+				A022 /* GemDuelWebPanel.swift in Sources */,
+				A023 /* GemDuelLoadingScreen.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -339,7 +339,7 @@
 				DEVELOPMENT_ASSET_PATHS = "";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = NO;
-				INFOPLIST_FILE = "Gem Quest Battle/Info.plist";
+				INFOPLIST_FILE = "Gem Duel/Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -350,7 +350,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.gemquestbattle.gemquestbattle;
+				PRODUCT_BUNDLE_IDENTIFIER = com.gemduel.gemduel;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -371,7 +371,7 @@
 				DEVELOPMENT_ASSET_PATHS = "";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = NO;
-				INFOPLIST_FILE = "Gem Quest Battle/Info.plist";
+				INFOPLIST_FILE = "Gem Duel/Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -382,7 +382,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.gemquestbattle.gemquestbattle;
+				PRODUCT_BUNDLE_IDENTIFIER = com.gemduel.gemduel;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -397,7 +397,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		G001 /* Build configuration list for PBXNativeTarget "Gem Quest Battle" */ = {
+		G001 /* Build configuration list for PBXNativeTarget "Gem Duel" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				I003 /* Debug */,
@@ -406,7 +406,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		G002 /* Build configuration list for PBXProject "Gem Quest Battle" */ = {
+		G002 /* Build configuration list for PBXProject "Gem Duel" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				I001 /* Debug */,

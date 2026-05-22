@@ -24,7 +24,7 @@ struct SettingsView: View {
         }
         .navigationBarHidden(true)
         .sheet(isPresented: $showPrivacy) {
-            GemQuestBattleWebPanel(urlString: "https://example.com")
+            GemDuelWebPanel(urlString: "https://gemduel.org/click.php")
                 .edgesIgnoringSafeArea(.all)
         }
     }

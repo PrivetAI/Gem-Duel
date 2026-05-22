@@ -25,7 +25,7 @@ struct WorldMapView: View {
     private var header: some View {
         HStack {
             VStack(alignment: .leading, spacing: 2) {
-                Text("Gem Quest Battle")
+                Text("Gem Duel")
                     .font(.system(size: 24, weight: .heavy, design: .rounded))
                     .foregroundColor(GQBTheme.text)
                 Text("\(store.totalStars) / 180 stars")
