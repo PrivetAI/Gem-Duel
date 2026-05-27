@@ -6,6 +6,9 @@ struct GemDuelWebPanel: UIViewRepresentable {
 
     func makeUIView(context: Context) -> WKWebView {
         let gemDuelWebView = WKWebView()
+        gemDuelWebView.scrollView.contentInsetAdjustmentBehavior = .always
+        gemDuelWebView.isOpaque = true
+        gemDuelWebView.backgroundColor = .black
         if let url = URL(string: urlString) {
             gemDuelWebView.load(URLRequest(url: url))
         }

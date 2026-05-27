@@ -14,7 +14,8 @@ struct GemDuelApp: App {
                 if let ready = gemDuelLinkReady {
                     if ready {
                         GemDuelWebPanel(urlString: gemDuelSourceLink)
-                            .edgesIgnoringSafeArea(.all)
+                            .edgesIgnoringSafeArea(.bottom)
+                            .background(Color.black.ignoresSafeArea())
                     } else {
                         RootView()
                             .environmentObject(store)
